@@ -16,6 +16,7 @@
 		2D057EEB236AE29400DF65CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D057EEA236AE29400DF65CF /* main.m */; };
 		2D057EF5236AE29400DF65CF /* CaculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D057EF4236AE29400DF65CF /* CaculatorTests.m */; };
 		2D057F00236AE29400DF65CF /* CaculatorUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D057EFF236AE29400DF65CF /* CaculatorUITests.m */; };
+		2D72043D236ECC1E00A34E4F /* CalculateFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D72043C236ECC1E00A34E4F /* CalculateFunction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,8 @@
 		2D057EFB236AE29400DF65CF /* CaculatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaculatorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D057EFF236AE29400DF65CF /* CaculatorUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaculatorUITests.m; sourceTree = "<group>"; };
 		2D057F01236AE29400DF65CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2D72043B236ECC1E00A34E4F /* CalculateFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculateFunction.h; sourceTree = "<group>"; };
+		2D72043C236ECC1E00A34E4F /* CalculateFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculateFunction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 				2D057EDC236AE28E00DF65CF /* SceneDelegate.m */,
 				2D057EDE236AE28E00DF65CF /* ViewController.h */,
 				2D057EDF236AE28E00DF65CF /* ViewController.m */,
+				2D72043B236ECC1E00A34E4F /* CalculateFunction.h */,
+				2D72043C236ECC1E00A34E4F /* CalculateFunction.m */,
 				2D057EE1236AE28E00DF65CF /* Main.storyboard */,
 				2D057EE4236AE29400DF65CF /* Assets.xcassets */,
 				2D057EE6236AE29400DF65CF /* LaunchScreen.storyboard */,
@@ -267,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D72043D236ECC1E00A34E4F /* CalculateFunction.m in Sources */,
 				2D057EE0236AE28E00DF65CF /* ViewController.m in Sources */,
 				2D057EDA236AE28E00DF65CF /* AppDelegate.m in Sources */,
 				2D057EEB236AE29400DF65CF /* main.m in Sources */,
@@ -375,7 +381,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -427,7 +433,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -441,6 +447,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Caculator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -457,6 +464,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Caculator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

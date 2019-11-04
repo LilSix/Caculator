@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@class CalculateFunction;
 
+@interface ViewController : UIViewController
 
 @end
 
