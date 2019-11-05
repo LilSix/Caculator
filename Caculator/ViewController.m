@@ -30,15 +30,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *percentButton;
 @property (weak, nonatomic) IBOutlet UIButton *divisionButton;
 @property (weak, nonatomic) IBOutlet UILabel *answerLabel;
-@property (strong, nonatomic) NSNumber *numberX;
-@property (strong, nonatomic) NSNumber *decimalNumberX;
-@property (strong, nonatomic) NSNumber *tempNumberX;
-@property (strong, nonatomic) NSNumber *numberY;
-@property (strong, nonatomic) NSNumber *tempNumberY;
-@property (strong, nonatomic) NSNumber *decimalNumberY;
-@property (strong, nonatomic) NSNumber *answer;
-@property (assign, nonatomic) Operation selectedOperation;
 @property (strong, nonatomic) UIButton *selectedButton;
+@property (strong, nonatomic) NSNumber *numberX;
+@property (strong, nonatomic) NSNumber *numberY;
+@property (copy, nonatomic) NSString *decimalStringX;
+@property (copy, nonatomic) NSString *decimalStringY;
+@property (assign, nonatomic) Operation selectedOperation;
 @property (strong, nonatomic) CalculateFunction *calculateFunction;
 @property (assign, nonatomic, getter=isDecimalNumber) BOOL decimalNumber;
 
@@ -58,9 +55,9 @@
     [super viewDidLoad];
     self.decimalNumber = NO;
     self.numberX = @(0);
-    self.decimalNumberX = @(0);
     self.numberY = @(0);
-    self.decimalNumberY = @(0);
+    self.decimalStringX = [[NSString alloc] init];
+    self.decimalStringY = [[NSString alloc] init];
     self.selectedOperation = noneOperation;
 }
 
@@ -118,8 +115,9 @@
             self.answerLabel.text = [self.numberX stringValue];
         } else {
             // 有小數點
-            self.decimalNumberX = [NSDecimalNumber numberWithDouble:[self.decimalNumberX doubleValue] * 10 + sender.tag];
-            self.answerLabel.text = [NSString stringWithFormat:@"%@.%@", [self.numberX stringValue], [self.decimalNumberX stringValue]];
+            
+            self.decimalStringX = [NSString stringWithFormat:@"%@%ld", self.decimalStringX, sender.tag];
+            self.answerLabel.text = [NSString stringWithFormat:@"%@.%@", [self.numberX stringValue], self.decimalStringX];
         }
     } else {
         // 計算數
@@ -129,8 +127,8 @@
             self.answerLabel.text = [self.numberY stringValue];
         } else {
             // 有小數點
-            self.decimalNumberY = [NSDecimalNumber numberWithDouble:[self.decimalNumberY doubleValue] * 10 + sender.tag];
-            self.answerLabel.text = [NSString stringWithFormat:@"%@.%@", [self.numberY stringValue], [self.decimalNumberY stringValue]];
+            self.decimalStringY = [NSString stringWithFormat:@"%@%ld", self.decimalStringY, sender.tag];
+            self.answerLabel.text = [NSString stringWithFormat:@"%@.%@", [self.numberY stringValue], self.decimalStringY];
         }
     }
     [self.clearButton setTitle:@"C"
@@ -140,7 +138,11 @@
 - (IBAction)dotButtonTouched:(UIButton *)sender {
     if (self.isDecimalNumber == NO) {
         self.decimalNumber = YES;
-        self.answerLabel.text = [NSString stringWithFormat:@"%@.", self.answerLabel.text];
+        if (self.selectedOperation == noneOperation) {
+            self.answerLabel.text = [NSString stringWithFormat:@"%@.", self.answerLabel.text];
+        } else {
+            self.answerLabel.text = [NSString stringWithFormat:@"%@.", [self.numberY stringValue]];
+        }
     }
 }
 
@@ -190,16 +192,16 @@
 - (void)calculateAnswerWithOperation:(Operation)operation {
     // 運算前先將整數與小數加總
     if (self.isDecimalNumber == YES) {
-        NSString *decimalNumberXString = [NSString stringWithFormat:@"0.%@", self.decimalNumberX];
         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
         [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-        self.decimalNumberX = [numberFormatter numberFromString:decimalNumberXString];
-        self.numberX = @([self.numberX doubleValue] + [self.decimalNumberX doubleValue]);
-        self.decimalNumberX = @(0);
-        NSString *decimalNumberYString = [NSString stringWithFormat:@"0.%@", self.decimalNumberY];
-        self.decimalNumberY = [numberFormatter numberFromString:decimalNumberYString];
-        self.numberY = @([self.numberY doubleValue] + [self.decimalNumberY doubleValue]);
-        self.decimalNumberY = @(0);
+        self.decimalStringX = [NSString stringWithFormat:@"0.%@", self.decimalStringX];
+        NSNumber *decimalNumberX = [numberFormatter numberFromString:self.decimalStringX];
+        self.numberX = @([self.numberX doubleValue] + [decimalNumberX doubleValue]);
+        self.decimalStringX = @"";
+        self.decimalStringY = [NSString stringWithFormat:@"0.%@", self.decimalStringY];
+        NSNumber *decimalNumberY = [numberFormatter numberFromString:self.decimalStringY];
+        self.numberY = @([self.numberY doubleValue] + [decimalNumberY doubleValue]);
+        self.decimalStringY = @"";
     }
     
     // 變換運算符號時，先將前一符號做運算
@@ -233,6 +235,9 @@
             if ([self.numberY isEqualToNumber:@(0)]) {
                 break;
             }
+            if (self.selectedOperation == noneOperation) {
+                self.numberY = @(1);
+            }
             self.numberX = [self.calculateFunction divisionCaculate:self.numberX
                                                             divisor:self.numberY];
             break;
@@ -241,6 +246,8 @@
             break;
         case noneOperation:
             self.numberX = @(0);
+            self.decimalStringX = @"";
+            self.decimalStringY = @"";
             break;
     }
     if (operation == percentOperation) {
